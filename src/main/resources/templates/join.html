@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>회원가입</title>
+</head>
+<body>
+<h1>도서관 토론실 예약 - 회원가입</h1>
+
+<form method="post" action="/join">
+  <label for="email">이메일:</label>
+  <input type="text" id ="email" name="email" required><br>
+
+  <label for="password">비밀번호:</label>
+  <input type="password" id="password" name="password" required><br>
+
+  <button type="submit">회원가입</button>
+</form>
+
+<p th:if="${error}" th:text="${error}" style="color:red;"></p>
+<p th:if="${success}" th:text="${success}" style="color:green;"></p>
+
+<p><a href="/">로그인 하러 가기</a></p>
+
+</body>
+</html>

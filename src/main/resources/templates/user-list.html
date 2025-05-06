@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<h1>회원 목록</h1>
+<table>
+  <thead>
+  <tr>
+    <th>이메일</th>
+    <th>비밀번호</th>
+    <th>[예약방번호]</th>
+    <th>[예약방번호]</th>
+    <th>[예약 날짜] </th>
+    <th>[예약 시간] </th>
+
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="user : ${users}">
+    <td th:text="${user.email}"></td>
+    <td th:text="${user.password}"></td>
+    <td th:text="${user?.room}"></td> <!--존재 X-->
+    <td th:text="${user.reservation?.room}">-</td>
+    <td th:text="${user.reservation?.date}">-</td>
+
+    <td>
+    <span th:each="time, iterStat : ${user.reservation?.times}">
+        <span th:text="${time}"></span>
+        <span th:if="${!iterStat.last}">, </span>
+    </span>
+    </td>
+
+  </tr>
+  </tbody>
+</table>
+
+<a href="/home">메인으로.</a>
+
+</body>
+</html>

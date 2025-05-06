@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>토론실 예약</title>
+  <style>
+    .time-slot {
+        display: inline-block;
+        margin: 5px;
+        padding: 10px;
+        border: 1px solid #aaa;
+        cursor: pointer;
+    }
+    .selected {
+        background-color: #a2d5f2;
+    }
+  </style>
+</head>
+<body>
+
+<h2>토론실 예약 - <span th:text="${room}"></span></h2>
+
+<form method="post" action="/reserve">
+  <label for="date">날짜 선택:</label>
+  <input type="date" id="date" name="date" required>
+
+  <div id="timeSlots">
+    <!-- 시간 선택 버튼 -->
+<!--    <div class="time-slot" data-time="10:00">10:00</div>
+    <div class="time-slot" data-time="11:00">11:00</div>
+    <div class="time-slot" data-time="12:00">12:00</div>
+    <div class="time-slot" data-time="13:00">13:00</div>
+    <div class="time-slot" data-time="14:00">14:00</div>-->
+    <div th:each="time : ${times}" class="time-slot" th:data-time="${time}" th:text="${time}">시간</div>
+    <!-- 원하는 시간 추가 가능 -->
+  </div>
+
+  <!-- 선택된 시간들을 hidden input으로 전송 -->
+  <input type="hidden" name="room" th:value="${room}">
+  <input type="hidden" name="times" id="selectedTimes">
+
+  <button type="submit">예약하기</button>
+</form>
+
+<script>
+  const timeSlots = document.querySelectorAll(".time-slot");
+  const selectedTimesInput = document.getElementById("selectedTimes");
+  let selected = [];
+
+  timeSlots.forEach(slot => {
+      slot.addEventListener("click", () => {
+          const time = slot.getAttribute("data-time");
+
+          if (slot.classList.contains("selected")) {
+              // 선택 취소
+              selected = selected.filter(t => t !== time);
+              slot.classList.remove("selected");
+          } else {
+              // 추가 전 정렬하고 연속 확인
+              const temp = [...selected, time].sort();
+              const indexes = temp.map(t => parseInt(t.split(":")[0]));
+
+              // 연속 3시간 이하인지 체크
+              let isConsecutive = true;
+              for (let i = 1; i < indexes.length; i++) {
+                  if (indexes[i] !== indexes[i - 1] + 1) {
+                      isConsecutive = false;
+                      break;
+                  }
+              }
+
+              if (temp.length <= 3 && isConsecutive) {
+                  selected.push(time);
+                  slot.classList.add("selected");
+              } else {
+                  alert("최대 3시간까지 연속으로만 선택할 수 있습니다.");
+              }
+          }
+
+          selectedTimesInput.value = selected.sort().join(",");
+      });
+  });
+</script>
+
+</body>
+</html>

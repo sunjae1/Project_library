@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>도서관 토론실 예약 시스템</title>
+</head>
+<body>
+<!-- 로그인 정보 표시 -->
+<div class="header">
+  <p>계정명: <span th:text="${email}"></span></p>
+  <p>내가 예약한 토론실: <span th:text="${room}"></span></p>
+</div>
+
+<!-- 설계도 (스터디 카페처럼 좌석 배치) -->
+<div class="room-layout">
+  <form action="/reserve" method="get">
+    <div class="seat">
+      <button type="submit" name="room" value="ROOM1">Room 1</button>
+    </div>
+    <div class="seat">
+      <button type="submit" name="room" value="ROOM2">Room 2</button>
+    </div>
+    <div class="seat">
+      <button type="submit" name="room" value="ROOM3">Room 3</button>
+    </div>
+    <div class="seat">
+      <button type="submit" name="room" value="ROOM4">Room 4</button>
+    </div>
+    <div class="seat">
+      <button type="submit" name="room" value="ROOM5">Room 5</button>
+    </div>
+  </form>
+</div>
+  </form>
+</div>
+</body>
+</html>

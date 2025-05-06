@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>도서관 토론실 예약 시스템</title>
+    <style>
+        /* 간단한 스타일링 */
+        .header {
+            text-align: right;
+            padding: 10px;
+            font-size: 16px;
+        }
+        .room-layout {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+            padding: 50px;
+            text-align: center;
+        }
+        .seat {
+            width: 100px;
+            height: 100px;
+            border: 1px solid #ccc;
+            background-color: #f1f1f1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<!-- 로그인 정보 표시 -->
+<div class="header">
+<!--    <p>계정명: [[${email}]]</p>-->
+    <p>계정명: <span th:text="${email}"></span></p>
+    <p>내가 예약한 토론실: <span th:text="${room}"></span></p>
+    <p>예약 날짜: <span th:text="${date}"></span></p>
+
+    <p>예약 시간 :
+        <span th:each="time, iterStat : ${times}">
+        <span th:text="${time}"></span>
+        <span th:if="${!iterStat.last}">, </span>
+    </span>
+
+    </p>
+    <a href="/cancel"> 예약 취소 </a>
+
+    <!-- 여기에 예약된 토론실을 추가할 수 있습니다. -->
+</div>
+
+<!-- 설계도 (스터디 카페처럼 좌석 배치) -->
+<form id="reservationForm" action="/reserve" method="get">
+    <!-- 숨겨진 input 필드, 예약할 방을 여기로 전송 -->
+    <input type="hidden" name="room" id="roomInput">
+
+    <div class="room-layout">
+        <div class="seat" onclick="confirmReservation('ROOM1')">Room 1</div>
+        <div class="seat" onclick="confirmReservation('ROOM2')">Room 2</div>
+        <div class="seat" onclick="confirmReservation('ROOM3')">Room 3</div>
+        <div class="seat" onclick="confirmReservation('ROOM4')">Room 4</div>
+        <div class="seat" onclick="confirmReservation('ROOM5')">Room 5</div>
+        <!-- 추가 좌석을 배치할 수 있습니다. -->
+    </div>
+</form>
+<a href="/users">회원목록 바로가기</a>
+
+<script>
+    function confirmReservation(room) {
+        if (confirm("예약하시겠습니까?")) {
+            // 예약할 방을 hidden input에 설정
+            document.getElementById('roomInput').value = room;
+            // 폼 제출
+            document.getElementById('reservationForm').submit();
+        }
+    }
+</script>
+</body>
+</html>
