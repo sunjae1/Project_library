@@ -25,6 +25,8 @@ public class TimeRepository {
             allTimeSlots.add(String.format("%02d:00", hour));
         }
     }
+
+
     //예약 추가시
     public void addReservation(String date, Room room, List<String> times) {
         String key = generateKey(date, room); //ROOM1|2025-05-03으로 키 만듬.
@@ -50,18 +52,18 @@ public class TimeRepository {
     /**
      * 임시.
      */ //사용된 시간 확인용.
-    public List<String> getReservedTimes(List<User> users, String date, Room room) {
-        List<String> reserved = new ArrayList<>();
-        for (User user : users) {
-            Reservation reservation = user.getReservation();
-            if (reservation != null &&
-                    reservation.getDate().equals(date) &&
-                    reservation.getRoom().equals(room)) {
-                reserved.addAll(reservation.getTimes());
-            }
-        }
-        return reserved;
-    }
+//    public List<String> getReservedTimes(List<User> users, String date, Room room) {
+//        List<String> reserved = new ArrayList<>();
+//        for (User user : users) {
+//            Reservation reservation = user.getReservation();
+//            if (reservation != null &&
+//                    reservation.getDate().equals(date) &&
+//                    reservation.getRoom().equals(room)) {
+//                reserved.addAll(reservation.getTimes());
+//            }
+//        }
+//        return reserved;
+//    }
 
 
 }

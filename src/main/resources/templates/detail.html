@@ -14,11 +14,6 @@
     .selected {
         background-color: #a2d5f2;
     }
-    .disabled {
-        background-color: #ddd;
-        color: #999;
-        cursor: not-allowed;
-    }
   </style>
 </head>
 <body>
@@ -27,28 +22,28 @@
 
 <form method="post" action="/reserve">
   <label for="date">날짜 선택:</label>
-  <input type="date" id="date" name="date" th:value="${date}" required>
+  <input type="date" id="date" name="date" required>
 
   <div id="timeSlots">
     <!-- 시간 선택 버튼 -->
-    <div th:each="time : ${timeList}"
-         th:class="'time-slot ' + (${reservedTimes != null and reservedTimes.contains(time)} ? 'disabled' : '')"
-         th:attr="data-time=${time}"
-         th:text="${reservedTimes != null and reservedTimes.contains(time)} ? time + ' (X)' : time">
-    </div>
-
+<!--    <div class="time-slot" data-time="10:00">10:00</div>
+    <div class="time-slot" data-time="11:00">11:00</div>
+    <div class="time-slot" data-time="12:00">12:00</div>
+    <div class="time-slot" data-time="13:00">13:00</div>
+    <div class="time-slot" data-time="14:00">14:00</div>-->
+    <div th:each="time : ${times}" class="time-slot" th:data-time="${time}" th:text="${time}">시간</div>
+    <!-- 원하는 시간 추가 가능 -->
   </div>
 
   <!-- 선택된 시간들을 hidden input으로 전송 -->
   <input type="hidden" name="room" th:value="${room}">
-  <input type="hidden" name="date" th:value="${date}">
   <input type="hidden" name="times" id="selectedTimes">
 
   <button type="submit">예약하기</button>
 </form>
 
 <script>
-  const timeSlots = document.querySelectorAll(".time-slot:not(.disabled)");
+  const timeSlots = document.querySelectorAll(".time-slot");
   const selectedTimesInput = document.getElementById("selectedTimes");
   let selected = [];
 

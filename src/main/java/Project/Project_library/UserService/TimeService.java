@@ -47,17 +47,7 @@ public class TimeService {
 
                     alltimes.removeAll(cleanedTimes);
 
-                    System.out.println("alltimes = " + alltimes);
-                    System.out.println("alltimes = " + alltimes);
-                    System.out.println("alltimes = " + alltimes);
-                    System.out.println("alltimes = " + alltimes);
-                    System.out.println("alltimes = " + alltimes);
-                    System.out.println("alltimes = " + alltimes);
 
-
-//                    alltimes.removeAll(times1);
-
-//                    return alltimes;
                 }
             }
         }

@@ -36,6 +36,8 @@ public class RoomController {
         this.userRepository =userRepository;
     }
 
+
+
     @GetMapping("/reserve") //방 선택 후.
     public String reserveRoom(@RequestParam("room")Room room,
                               HttpSession session,
@@ -59,10 +61,10 @@ public class RoomController {
 
         }
 
-        return "detail2"; //날짜, 시간 예약페이지 detail로 이동.
+        return "detail"; //날짜, 시간 예약페이지 detail로 이동.
     }
 
-    @PostMapping("/reserve") //detail에서 시간 날짜 정보 반환.
+    @PostMapping("/reserve") //detail.html 에서 시간 날짜 정보 반환.
     public String reserve(@RequestParam String date,
                           @RequestParam List<String> times,
                           @RequestParam Room room,
@@ -101,7 +103,7 @@ public class RoomController {
     @GetMapping("/cancel")
     public String cancelTime(HttpSession session, Model model)
     {
-        //세션이 넘어오면,
+        //세션이 넘어오면
         String email = (String) session.getAttribute("loginUser");
         timeService.timeCancel(email);
 

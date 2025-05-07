@@ -12,7 +12,6 @@
     <th>이메일</th>
     <th>비밀번호</th>
     <th>[예약방번호]</th>
-    <th>[예약방번호]</th>
     <th>[예약 날짜] </th>
     <th>[예약 시간] </th>
 
@@ -22,7 +21,6 @@
   <tr th:each="user : ${users}">
     <td th:text="${user.email}"></td>
     <td th:text="${user.password}"></td>
-    <td th:text="${user?.room}"></td> <!--존재 X-->
     <td th:text="${user.reservation?.room}">-</td>
     <td th:text="${user.reservation?.date}">-</td>
 

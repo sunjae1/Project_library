@@ -14,16 +14,17 @@ import java.util.concurrent.ConcurrentHashMap;
 public class UserRepository {
     private final Map<String, User> users = new HashMap<>();
 
+    //email을 키 값으로 user 객체 저장.
     public void save(User user) {
         users.put(user.getEmail(), user);
     }
 
+    //email을 키 값으로 user 값 반환.
     public User findByEmail(String email) {
         return users.get(email);
     }
 
     //한 회원 리턴
-
     public User findOne(String email) {
         return users.get(email);
     }
@@ -34,7 +35,7 @@ public class UserRepository {
         return new ArrayList<>(users.values());
     }
 
-    //방 추가
+    //방 추가 --> 기존 이전 방식.
     public String saveRoom(String email, Room room) {
         User oldUser = users.get(email);
         User updatedUser = oldUser.withRoom(room);

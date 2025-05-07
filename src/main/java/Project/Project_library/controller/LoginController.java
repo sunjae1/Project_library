@@ -66,11 +66,9 @@ public class LoginController {
         String userEmail = user.getEmail();
         Room room = user.getRoom();
         if (user.getReservation() !=null) {
-            String date = user.getReservation().getDate();
-            List<String> times = user.getReservation().getTimes();
 
-            model.addAttribute("date",date);
-            model.addAttribute("times",times);
+            model.addAttribute("date", user.getReservation().getDate());
+            model.addAttribute("times", user.getReservation().getTimes());
         }
 
 
