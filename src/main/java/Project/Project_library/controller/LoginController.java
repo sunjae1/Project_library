@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Controller
 public class LoginController {
@@ -53,7 +54,8 @@ public class LoginController {
     public String home(HttpSession session, Model model) {
         String email = (String) session.getAttribute("loginUser");
 
-        User user = userService.findOne(email);
+        User user = userService.findOne(email)
+                .orElseThrow(() -> new IllegalArgumentException("해당 유저 없음"));
         model.addAttribute("user", user);
 
         //뷰에 데이터 보낼 때 사용.

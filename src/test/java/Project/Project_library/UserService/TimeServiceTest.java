@@ -1,24 +1,15 @@
 package Project.Project_library.UserService;
 
 import Project.Project_library.Repository.TimeRepository;
-import Project.Project_library.Repository.UserRepository;
-import Project.Project_library.domain.AllTime;
-import Project.Project_library.domain.Reservation;
-import Project.Project_library.domain.Room;
-import Project.Project_library.domain.User;
-import org.junit.jupiter.api.Test;
+import Project.Project_library.Repository.MemoryUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 public class TimeServiceTest {
 
    @Autowired private TimeRepository timeRepository;
-    @Autowired private UserRepository userRepository;
+    @Autowired private MemoryUserRepository memoryUserRepository;
 
 
 

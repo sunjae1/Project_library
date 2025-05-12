@@ -1,7 +1,7 @@
 package Project.Project_library.UserService;
 
 import Project.Project_library.Repository.TimeRepository;
-import Project.Project_library.Repository.UserRepository;
+import Project.Project_library.Repository.MemoryUserRepository;
 import Project.Project_library.domain.AllTime;
 import Project.Project_library.domain.Reservation;
 import Project.Project_library.domain.Room;
@@ -17,12 +17,12 @@ import java.util.stream.Collectors;
 @Service
 public class TimeService {
     private final TimeRepository timeRepository;
-    private final UserRepository userRepository;
+    private final MemoryUserRepository memoryUserRepository;
 
     @Autowired
-    public TimeService(TimeRepository timeRepository, UserRepository userRepository) {
+    public TimeService(TimeRepository timeRepository, MemoryUserRepository memoryUserRepository) {
         this.timeRepository = timeRepository;
-        this.userRepository = userRepository;
+        this.memoryUserRepository = memoryUserRepository;
     }
 
     public void reserve(LocalDate date, Room room, List<String> times) {
@@ -35,7 +35,12 @@ public class TimeService {
     public List<String> timeShow(Room room) {
         AllTime allTime = new AllTime();
         List<String> alltimes = allTime.getAlltime();
-        List<User> all = userRepository.findAll(); //모든 유저 리스트로 받음.
+
+        /**
+         * 여기서부터 JPA 로 교체.
+         */
+
+        List<User> all = memoryUserRepository.findAll(); //모든 유저 리스트로 받음.
 
         for (User user : all) {
             if (user.getReservation()!=null)
@@ -56,19 +61,23 @@ public class TimeService {
             }
         }
         return alltimes;
+
+        /**
+         * 여기까지.====================================
+         */
     }
 
 
     //시간 취소. --> 전체 예약 초기화
     public void timeCancel(String email) {
         //form 태그로 name에 email이 날아왔다 가정. //아니면 세션에서 User 객체
-        User user = userRepository.findOne(email);
+        User user = memoryUserRepository.findOne(email);
 
         //전체 예약 초기화.
         user.setReservation(new Reservation(null, new ArrayList<>(), null));
 
 //        user.getReservation().setTimes(new ArrayList<>());
-        userRepository.save(user);
+        memoryUserRepository.save(user);
 
 
     }

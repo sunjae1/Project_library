@@ -1,7 +1,6 @@
 package Project.Project_library.controller;
 
 import Project.Project_library.Repository.TimeRepository;
-import Project.Project_library.Repository.UserRepository;
 import Project.Project_library.UserService.TimeService;
 import Project.Project_library.UserService.UserService;
 import Project.Project_library.domain.Reservation;
@@ -44,7 +43,8 @@ public class RoomController {
     {
 
         String email = (String) session.getAttribute("loginUser");
-        User user = userService.findOne(email);
+        User user = userService.findOne(email)
+                .orElseThrow(() -> new IllegalArgumentException("해당 유저 없음"));
         if (email != null) {
 
 //            User valid = userRepository.findOne(email);
@@ -76,19 +76,28 @@ public class RoomController {
                           @RequestParam Room room,
                           HttpSession session,
                           Model model) {
+
+        System.out.println("RoomController.reserve PostMapping");
         String email = (String) session.getAttribute("loginUser");
+
+
 
         if (email!=null && times.size() <=3) {
             Reservation reservation = new Reservation(date, times, room);
             userService.reserve(email, reservation);
+            System.out.println("RoomController 86 Line afer ========");
             timeService.reserve(date,room,times);
 
-            User user = userService.findOne(email);
+
 
             //임시
 //            List<String> reserved = timeRepository.getReservedTime(date, room);
 
 //            model.addAttribute("email", email);
+
+            //다 넣고 찾아야 맞을듯.
+            User user = userService.findOne(email)
+                    .orElseThrow(() -> new IllegalArgumentException("해당 유저 없음"));
             model.addAttribute("user",user);
 
             model.addAttribute("date", date);
@@ -113,7 +122,8 @@ public class RoomController {
         String email = (String) session.getAttribute("loginUser");
         timeService.timeCancel(email);
 
-        User user = userService.findOne(email);
+        User user = userService.findOne(email)
+                .orElseThrow(() -> new IllegalArgumentException("해당 유저 없음"));
 
         //인라인으로 변경.
 
