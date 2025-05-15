@@ -69,12 +69,28 @@ public class UserService {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new IllegalArgumentException("해당 유저 없음"));
 
-        reservation.setUser(user); //FK 넣음.
 
-        user.setReservation(reservation); //필요없음.
-        System.out.println("save before===========");
+        //이전 예약 끊기.
+        Reservation oldReservation = user.getReservation();
+        if (oldReservation != null) //예약이 있다면,
+        {
+            oldReservation.setUser(null);
+            user.setReservation(null); //둘 다 영속이라, 쓰기지연 SQL에 delete 들어감. 이미 엔티티 사라져서 스냅샷이랑 다름. flush() 타이밍에 delete문 SQL 만들어짐.
+//            userRepository.deleteReservation(oldReservation);
+// 근데 여기서 이미 영속성 컨텍스트에 엔티티로 없는걸 요청하니깐(이미 삭제) Transient exception 터짐.
+            userRepository.flush(); //삭제 쿼리 먼저 날림.
+
+        }
 
         reservationRepository.save(reservation);
+
+
+        reservation.setUser(user); //FK 넣음.
+        user.setReservation(reservation);
+
+
+        System.out.println("save before===========");
+
 //        userRepository.save(user); //User에 reserve 까지 포함한 객체 HahMap에 put.
         System.out.println("save after===========");
     }

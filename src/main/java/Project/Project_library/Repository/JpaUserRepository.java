@@ -1,5 +1,6 @@
 package Project.Project_library.Repository;
 
+import Project.Project_library.domain.Reservation;
 import Project.Project_library.domain.User;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -42,5 +43,16 @@ public class JpaUserRepository implements UserRepository{
                 .getResultList();
 
         return result.stream().findFirst();
+    }
+
+    @Override
+    public void deleteReservation(Reservation reservation) {
+        em.remove(reservation);
+        em.flush();
+    }
+
+    @Override
+    public void flush() {
+        em.flush();
     }
 }

@@ -16,6 +16,6 @@ public class ReservationRepository {
     public void save(Reservation reservation)
     {
         em.persist(reservation);
-        em.flush(); //바로 insert 쿼리 날림.
+//        em.flush(); //바로 insert 쿼리 날림.
     }
 }

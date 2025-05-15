@@ -1,5 +1,6 @@
 package Project.Project_library.Repository;
 
+import Project.Project_library.domain.Reservation;
 import Project.Project_library.domain.User;
 
 import java.util.List;
@@ -13,4 +14,7 @@ public interface UserRepository {
 
     Optional<User> findByEmail(String email);
 
+    void deleteReservation(Reservation reservation);
+
+    void flush();
 }
