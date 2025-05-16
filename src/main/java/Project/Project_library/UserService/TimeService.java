@@ -87,14 +87,25 @@ public class TimeService {
         //전체 예약 초기화. --> em.createQuery 해도 영속성에서 관리해서 변경감지 가능.
 
         Reservation reservation = user.getReservation();
+//        Long id = user.getId();
+
+        // RESERVATION_TIMES ID 제거.
+//        userRepository.selectReservation(Long id) {
+//
+//        }
+
+
 
         if (user.getReservation() != null) //예약 있을때만 기능.
         {
-            reservation.setUser(null);
-            user.setReservation(null); //연관관계 끊고
-            userRepository.flush();
+            user.setReservation(null); //연관관계 끊고 . 읽기 전용.
+//            userRepository.flush();
 
-//            userRepository.deleteReservation(reservation);
+            userRepository.deleteReservation(reservation);
+
+
+//            reservation.setUser(null);
+
 
 
 //        user.getReservation().setTimes(new ArrayList<>());

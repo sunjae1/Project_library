@@ -17,4 +17,7 @@ public interface UserRepository {
     void deleteReservation(Reservation reservation);
 
     void flush();
+
+
+//    void selectReservation(Long id);
 }

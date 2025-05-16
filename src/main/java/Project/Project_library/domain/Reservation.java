@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Reservation {
+public class  Reservation {
 
     @Id
     @GeneratedValue

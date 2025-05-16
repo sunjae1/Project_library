@@ -39,7 +39,9 @@ public class User {
         return password;
     }
 
-
+    public Long getId() {
+        return id;
+    }
 
     //방을 가진 객체 반환 -- Setter 닫고, 새 객체 생성 방법. --
     public User withRoom(Room room) {

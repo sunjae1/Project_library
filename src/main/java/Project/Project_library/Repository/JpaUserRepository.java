@@ -55,4 +55,10 @@ public class JpaUserRepository implements UserRepository{
     public void flush() {
         em.flush();
     }
+
+
+//    @Override
+//    public void selectReservation(Long id) {
+//        em.find(Re)
+//    }
 }
